@@ -3,6 +3,7 @@ package com.cg.wallet.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -22,30 +25,31 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="walletTrans_tbl")
+@Table(name="wallettrans_tbl")
 public class WalletTransactions {
 
 	@Id
-	@Column(name="tid")
+	@Column(name="trans_id")
 	@GeneratedValue(generator="mygen",strategy=GenerationType.SEQUENCE)
-	@SequenceGenerator(name="mygen",sequenceName="transactions_seq",allocationSize=1)
-
+	@SequenceGenerator(name="mygen",sequenceName="transaction_seq",allocationSize=1)
 	private  int transactionId;
 	
-	@Column(name="tdes",length=15)
+	@Column(name="description",length=15)
 	private String description;
 	
-	@Column(name="tdate")
-	private LocalDate dateOfTransaction;
+	@Column(name="trxdate")
+	@Temporal(TemporalType.DATE)
+	private Date dateOfTransaction;
 
-	@Column(name="tamount")
+	@Column(name="trxamount")
 	private double amount;
 	
-	@Column(name="taccountbal")
+	@Column(name="accountbal")
 	private double accountBal;
 	
-     @ManyToOne
-     @JoinColumn(name="accountId",referencedColumnName="accountId")
+    @ManyToOne
+    @JoinColumn(name="account_id")
+	@JsonIgnore
 	private WalletAccount walletAccount;
 	
 	
@@ -67,11 +71,11 @@ public class WalletTransactions {
 		this.description = description;
 	}
 
-	public LocalDate getDateOfTransaction() {
+	public Date getDateOfTransaction() {
 		return dateOfTransaction;
 	}
 
-	public void setDateOfTransaction(LocalDate dateOfTransaction) {
+	public void setDateOfTransaction(Date dateOfTransaction) {
 		this.dateOfTransaction = dateOfTransaction;
 	}
 
@@ -105,3 +109,4 @@ public class WalletTransactions {
 	
 	
 }
+

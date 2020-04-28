@@ -14,29 +14,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="walletAccount_tbl")
+@Table(name="walletaccount_tbl")
 public class WalletAccount {
 
 	@Id
 	@GeneratedValue(generator="mygen",strategy=GenerationType.SEQUENCE)
 	@SequenceGenerator(name="mygen",sequenceName="account_seq",allocationSize=1)
-	@Column(name="accountId")
+	@Column(name="account_id")
 	private int accountId;
 	
 	@Column(name="accountbal")
 	private double accountBal;
 	
-	@Column(name="status")
+	@Column(name="status",length=15)
 	private String status;
 
 	@OneToMany(mappedBy="walletAccount")
-	@JsonIgnore
 	private List<WalletTransactions> transactions=new ArrayList<>();
 
 	public List<WalletTransactions> getTransactions() {
@@ -76,8 +74,12 @@ public class WalletAccount {
 		this.status = status;
 	}
 
+
+
+
 	
 
 
 
 }
+

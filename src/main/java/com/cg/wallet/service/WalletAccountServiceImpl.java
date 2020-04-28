@@ -1,6 +1,7 @@
 package com.cg.wallet.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,21 +20,38 @@ public class WalletAccountServiceImpl implements WalletAccountService{
 	
 
 	@Override
-	public WalletAccount showbalance(WalletAccount account) throws WalletAccountException {
-		// TODO Auto-generated method stub
-		return null;
+	public WalletAccount showbalance(int accountId,double accountBal) throws WalletAccountException {
+       WalletAccount walletAccount=accountDao.getAccountBal(accountBal);
+      
+		return walletAccount;
+	
 	}
 
 	@Override
-	public double deposit(int accountId, double amount) throws WalletAccountException {
-		// TODO Auto-generated method stub
-		return 0;
+	public WalletAccount deposit(int accountId, double amount) throws WalletAccountException {
+		WalletAccount walletAccount=accountDao.findById(accountId).get();
+		
+		walletAccount.setAccountBal(walletAccount.getAccountBal()+amount);
+		   accountDao.saveAndFlush(walletAccount);
+		   return walletAccount;
+
+		
 	}
 
 	@Override
 	public WalletAccount deleteAccount(int accountId) throws WalletAccountException {
-		// TODO Auto-generated method stub
-		return null;
+		WalletAccount wacc=null;
+		if(accountDao.existsById(accountId))
+		{
+			wacc=accountDao.findById(accountId).get();
+			accountDao.deleteById(accountId);
+			
+		}
+		else
+		{
+			throw new WalletAccountException("Id not found");
+		}
+		return wacc;
 	}
 
 	@Override
@@ -45,14 +63,15 @@ public class WalletAccountServiceImpl implements WalletAccountService{
 	}
 
 	@Override
-	public WalletAccount find(int accountId) throws WalletAccountException {
+	public WalletAccount findAccountById(int accountId) throws WalletAccountException {
 		WalletAccount walletAccount=null;
 		boolean flag=accountDao.existsById(accountId);
+		
 		if(flag)
 		{
 		
-		   walletAccount=accountDao.getOne(accountId);
-//			accountMap.put(accountId, walletAccount);  
+		   walletAccount=accountDao.findById(accountId).get();
+
 		}
 		else
 		{
@@ -66,24 +85,14 @@ public class WalletAccountServiceImpl implements WalletAccountService{
 		
 	
 	}
+	
 
-	/*@Override
-	public WalletAccount getWalletAccount(int accountId) throws WalletAccountException {
-		
-		if(!accountDao.existsById(accountId))
-		{
-			System.out.println("print accountId"+accountId);
-			throw new WalletAccountException("Id not found");
-		}
-		return accountDao.findById(accountId).get();
-	}*/
-
-	/*@Override
+	@Override
 	public List<WalletAccount> findAllAccounts() throws WalletAccountException {
         List<WalletAccount> list=accountDao.findAll();
 		
 		return list;
-	}*/
+	}
 
 
 

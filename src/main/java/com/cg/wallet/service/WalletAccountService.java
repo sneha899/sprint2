@@ -12,18 +12,21 @@ public interface WalletAccountService {
 
 	public WalletAccount createWalletAccount(WalletAccount walletAccount) throws WalletAccountException;
 	
-	//public WalletAccount getWalletAccount(int accountId) throws WalletAccountException;
-	
-	
-	public WalletAccount  find(int accountId) throws WalletAccountException; 
-
-	public WalletAccount showbalance(WalletAccount account) throws WalletAccountException;
+	public List<WalletAccount> findAllAccounts() throws WalletAccountException;
 
 	
-	public double deposit(int accountId , double amount) throws WalletAccountException;
+	
+	public WalletAccount  findAccountById(int accountId) throws WalletAccountException; 
+
+	public WalletAccount showbalance(int accountId,double accountBal) throws WalletAccountException;
+
+	
+	public WalletAccount deposit(int accountId , double amount) throws WalletAccountException;
 	
 
 	public WalletAccount deleteAccount(int accountId) throws WalletAccountException;
+
+
 
 	
 	

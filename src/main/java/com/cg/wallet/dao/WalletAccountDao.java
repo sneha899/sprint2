@@ -15,6 +15,23 @@ import com.cg.wallet.service.WalletAccountService;
 public interface WalletAccountDao extends JpaRepository<WalletAccount,Integer>
 
 {
+
+    @Query("SELECT e FROM WalletAccount e where e.accountBal =:accountBal")
+	public WalletAccount getAccountBal(@Param("accountBal")double accountBal);
+
+	
+
+	//public WalletAccount getAccountBal();
+
+
+
+	
+
+	//@Query("From e from WalletAccount where e.accountBal=:accountBal")
+	//public WalletAccount getAccountBal(@Param("accountBal") double accountBal);
+
+
+   
 	
     //@Query("Select e from WalletAccount where e.accountId=:id")
 	//public WalletAccount getWalletAccount(@Param("id")int accountId) ;
