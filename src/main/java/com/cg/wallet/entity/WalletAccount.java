@@ -28,9 +28,21 @@ public class WalletAccount {
 	@Column(name="account_id")
 	private int accountId;
 	
+	@Column(name="accountname",length=15)
+	private String accountName;
+	
 	@Column(name="accountbal")
 	private double accountBal;
 	
+	public String getAccountName() {
+		return accountName;
+	}
+
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
 	@Column(name="status",length=15)
 	private String status;
 
